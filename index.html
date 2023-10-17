@@ -48,7 +48,27 @@ high performance according to objective and subjective evaluations.</p>
 <a href="https://github.com/liusongxiang/ppg-vc">Source Codes</a></p> -->
 
 <h2 id="any-to-many-vc-demo-10-utterances-randomly-chosen-from-the-test-set">20 test cases from VCTK</h2>
+<script>  
+  document.addEventListener("DOMContentLoaded", function () {  
+    let audioContainer = document.getElementById("audio-container");  
+    let audioElements = audioContainer.getElementsByTagName("audio");  
 
+    for (let i = 0; i < audioElements.length; i++) {  
+      audioElements[i].addEventListener("play", function () {  
+        pauseOtherAudio(this);  
+      });  
+    }  
+
+    function pauseOtherAudio(currentAudio) {  
+      for (let i = 0; i < audioElements.length; i++) {  
+        if (audioElements[i] !== currentAudio) {  
+          audioElements[i].pause();  
+        }  
+      }  
+    }  
+  });  
+</script>
+<div id="audio-container"> 
 <table style="width: 100%; table-layout: fixed;"> 
   <colgroup>  
     <col style="width: 32%;">  
@@ -67,12 +87,13 @@ high performance according to objective and subjective evaluations.</p>
     </tr>
   </thead> 
   <tbody>  
-    <tr>  
+    <tr>   
       <td style="text-align: left">Six spoons of fresh snow peas, five thick slabs of blue cheese, and maybe a snack for her brother Bob.</td>  
       <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_003.wav" controls="" preload="" style="width: 100%;"></audio></td>  
       <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_003.wav" controls="" preload="" style="width: 100%;"></audio></td>  
       <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_003.wav" controls="" preload="" style="width: 100%;"></audio></td>  
       <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_003.wav" controls="" preload="" style="width: 100%;"></audio></td>  
+      </div>
     </tr>  
   </tbody>
   <tbody>
