@@ -1,16 +1,381 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>My Audio Page</title>  
-</head>  
-<body>  
-    <h1>My Audio Demo</h1>  
-    <p>Click the play button to listen to the audio demo:</p>  
-    <audio controls>  
-        <source src="03.wav" type="audio/mpeg">  
-        Your browser does not support the audio element.  
-    </audio>  
-</body>  
-</html>  
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Any-to-Many Voice Conversion with Location-Relative Sequence-to-Sequence Modeling | Correct and Speak</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="Any-to-Many Voice Conversion with Location-Relative Sequence-to-Sequence Modeling" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Demo for “Any-to-Many Voice Conversion with Location-Relative Sequence-to-Sequence Modeling”" />
+<meta property="og:description" content="Demo for “Any-to-Many Voice Conversion with Location-Relative Sequence-to-Sequence Modeling”" />
+<link rel="canonical" href="https://liusongxiang.github.io/BNE-Seq2SeqMoL-VC/" />
+<meta property="og:url" content="https://liusongxiang.github.io/BNE-Seq2SeqMoL-VC/" />
+<meta property="og:site_name" content="BNE-Seq2SeqMoL-VC" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Any-to-Many Voice Conversion with Location-Relative Sequence-to-Sequence Modeling" />
+<script type="application/ld+json">
+{"name":"BNE-Seq2SeqMoL-VC","description":"Demo for “Any-to-Many Voice Conversion with Location-Relative Sequence-to-Sequence Modeling”","url":"https://liusongxiang.github.io/BNE-Seq2SeqMoL-VC/","@type":"WebSite","headline":"Any-to-Many Voice Conversion with Location-Relative Sequence-to-Sequence Modeling","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Correct and Speak</h1>
+      <h2 class="project-tagline">Demo for "CORRECT AND SPEAK: ACCENT REDUCTION WITH MINIMUM SUPERVISION"</h2>
+      
+        <!-- <a href="https://github.com/liusongxiang/BNE-Seq2SeqMoL-VC" class="btn">View on GitHub</a> -->
+      
+      
+    </section>
+
+    <section class="main-content">
+      <!-- <h1 id="-any-to-many-voice-conversion-with-location-relative-sequence-to-sequence-modeling"><center> Any-to-Many Voice Conversion with Location-Relative Sequence-to-Sequence Modeling</center></h1> -->
+
+<!-- <center> Songxiang Liu, Yuewen Cao, Disong Wang, Xixin Wu, Xunying Liu and Helen Meng</center>
+
+<center>Human-Computer Communications Laboratory (HCCL), The Chinese University of Hong Kong</center>
+
+<h2 id="abstract">Abstract</h2>
+<p>This paper proposes an any-to-many location-relative, sequence-to-sequence (seq2seq) based, non-parallel voice conversion approach. 
+In this approach, we combine a bottle-neck feature extractor (BNE) with a seq2seq based synthesis module. During the training stage, 
+an encoder-decoder based hybrid connectionist-temporal-classification-attention (CTC-attention) phoneme recognizer is trained, 
+whose encoder has a bottle-neck layer. A BNE is obtained from the phoneme recognizer and is utilized to extract speaker-independent, 
+dense and rich linguistic representations from spectral features. Then a multi-speaker location-relative attention based seq2seq synthesis 
+model is trained to reconstruct spectral features from the bottle-neck features, conditioning on speaker representations for speaker 
+identity control in the generated speech. To mitigate the difficulties of using seq2seq based models to align long sequences, we down-sample 
+the input spectral feature along the temporal dimension and equip the synthesis model with a discretized mixture of logistic (MoL) attention mechanism. 
+Since the phoneme recognizer is trained with large speech recognition data corpus, the proposed approach can conduct any-to-many voice conversion.
+Objective and subjective evaluations shows that the proposed any-to-many approach has superior voice conversion performance in terms of both 
+naturalness and speaker similarity. Ablation studies are conducted to confirm the effectiveness of feature selection and model design strategies 
+in the proposed approach. The proposed VC approach can readily be extended to support any-to-any VC (also known as one/few-shot VC), and achieve 
+high performance according to objective and subjective evaluations.</p>
+
+<p>Paper link: <a href="https://arxiv.org/abs/2009.02725">arXiv</a><br />
+<a href="https://github.com/liusongxiang/ppg-vc">Source Codes</a></p> -->
+
+<h2 id="any-to-many-vc-demo-10-utterances-randomly-chosen-from-the-test-set">20 test cases from VCTK</h2>
+
+<table style="width: 100%; table-layout: fixed;"> 
+  <colgroup>  
+    <col style="width: 32%;">  
+    <col style="width: 17%;">  
+    <col style="width: 17%;">  
+    <col style="width: 17%;">  
+    <col style="width: 17%;"> 
+  </colgroup>
+  <thead>
+    <tr>
+      <th style="text-align: left"><strong>Transcript</strong></th>
+      <th style="text-align: left"><strong>Non-native Accented Speech</strong></th>
+      <th style="text-align: left"><strong>AC-PPG</strong></th>
+      <th style="text-align: left"><strong>VALLE-AC </strong></th>
+      <th style="text-align: left"><strong>The proposed</strong></th>
+    </tr>
+  </thead> 
+  <tbody>  
+    <tr>  
+      <td style="text-align: left">Six spoons of fresh snow peas, five thick slabs of blue cheese, and maybe a snack for her brother Bob.</td>  
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_003.wav" controls="" preload="" style="width: 100%;"></audio></td>  
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_003.wav" controls="" preload="" style="width: 100%;"></audio></td>  
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_003.wav" controls="" preload="" style="width: 100%;"></audio></td>  
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_003.wav" controls="" preload="" style="width: 100%;"></audio></td>  
+    </tr>  
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">We also need a small plastic snake and a big toy frog for the kids.</td>  
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_004.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_004.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_004.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_004.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">She is given a new deputy minister for transport and planning.</td>  
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_025.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_025.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_025.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_025.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">We must provide a long-term solution to tackle this attitude.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_037.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_037.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_037.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_037.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">She is believed to be in South Africa.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_041.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_041.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_041.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_041.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">That's all right then.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_099.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_099.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_099.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_099.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Health Secretary Frank Dobson made the surprise announcement in the Commons yesterday.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_106.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_106.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_106.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_106.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">I had relied on him.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_130.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_130.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_130.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_130.wav" controls="" preload="" style="width: 100%;"></audio></td>
+   </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">He sees a difference in the style of the two teams.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_142.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_142.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_142.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_142.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">There is a lack of chemistry.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_145.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_145.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_145.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_145.wav" controls="" preload="" style="width: 100%;"></audio></td>
+   </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">That could mean the difference between life and death in action.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_147.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_147.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_147.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_147.wav" controls="" preload="" style="width: 100%;"></audio></td>
+   </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">It wasn't to be.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_195.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_195.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_195.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_195.wav" controls="" preload="" style="width: 100%;"></audio></td>
+     </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">It's just awful.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_203.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_203.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_203.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_203.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">It is set in Paris.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_233.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_233.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_233.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_233.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">It is no surprise.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_239.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_239.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_239.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_239.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">It is also very valuable.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_260.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_260.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_260.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_260.wav" controls="" preload="" style="width: 100%;"></audio></td>
+
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">SCOTLAND has shown the way.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_299.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_299.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_299.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_299.wav" controls="" preload="" style="width: 100%;"></audio></td>
+     </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">It's the last thing on my mind.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_339.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_339.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_339.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_339.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">To do so he reckons that a good opening result is essential.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_353.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_353.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_353.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_353.wav" controls="" preload="" style="width: 100%;"></audio></td>
+   </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">We have to be sure that the taxation system can work.</td> 
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\source\p248_358.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ac_baseline_20cases\p248_358.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\encodec-vc-vctk\p248_358.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\vctk_iclr\ours_vctk_20cases_best\p248_358.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="any-to-many-vc-demo-10-utterances-randomly-chosen-from-the-test-set">10 test cases from L1-L2 ARCTIC</h2>
+
+<table style="width: 100%; table-layout: fixed;"> 
+  <colgroup>  
+    <col style="width: 32%;">  
+    <col style="width: 17%;">  
+    <col style="width: 17%;">  
+    <col style="width: 17%;">  
+    <col style="width: 17%;"> 
+  </colgroup>
+  <thead>
+    <tr>
+      <th style="text-align: left"><strong>Transcript</strong></th>
+      <th style="text-align: left"><strong>Non-native Accented Speech</strong></th>
+      <th style="text-align: left"><strong>Native Speech from bdl</strong></th>
+      <th style="text-align: left"><strong>VALLE-AC </strong></th>
+      <th style="text-align: left"><strong>The proposed</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">The hunters were still arguing and roaring like some semi-human amphibious breed.</td> 
+      <td style="text-align: left"><audio src="iclr_final\arctic\asi_source_KSP_arctic_b0397.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\native_bdl_arctic_b0397.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\encodec-vc-arctic_KSP_arctic_b0397.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\tfcodec_ac_epoch6_best_KSP_arctic_b0397.wav" controls="" preload="" style="width: 100%;"></audio></td>
+
+   </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">I learned it myself in English ships.</td> 
+      <td style="text-align: left"><audio src="iclr_final\arctic\asi_source_KSP_arctic_b0401.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\native_bdl_arctic_b0401.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\encodec-vc-arctic_KSP_arctic_b0401.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\tfcodec_ac_epoch6_best_KSP_arctic_b0401.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">It is a very tenable hypothesis, and will bear looking into.</td> 
+      <td style="text-align: left"><audio src="iclr_final\arctic\asi_source_ASI_arctic_b0424.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\native_bdl_arctic_b0424.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\encodec-vc-arctic_ASI_arctic_b0424.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\tfcodec_ac_epoch6_best_ASI_arctic_b0424.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">There were orange-green, gold-green, and a copper-green.</td> 
+      <td style="text-align: left"><audio src="iclr_final\arctic\asi_source_ASI_arctic_b0425.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\native_bdl_arctic_b0425.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\encodec-vc-arctic_ASI_arctic_b0425.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\tfcodec_ac_epoch6_best_ASI_arctic_b0425.wav" controls="" preload="" style="width: 100%;"></audio></td>
+   </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Famine had been my great ally.</td> 
+      <td style="text-align: left"><audio src="iclr_final\arctic\asi_source_RRBI_arctic_b0436.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\native_bdl_arctic_b0436.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\encodec-vc-arctic_RRBI_arctic_b0436.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\tfcodec_ac_epoch6_best_RRBI_arctic_b0436.wav" controls="" preload="" style="width: 100%;"></audio></td>
+         </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mops, sir, eagerly answered the sailor at the wheel.</td> 
+      <td style="text-align: left"><audio src="iclr_final\arctic\asi_source_RRBI_arctic_b0445.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\native_bdl_arctic_b0445.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\encodec-vc-arctic_RRBI_arctic_b0445.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\tfcodec_ac_epoch6_best_RRBI_arctic_b0445.wav" controls="" preload="" style="width: 100%;"></audio></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">You used to joyride like the very devil.</td> 
+      <td style="text-align: left"><audio src="iclr_final\arctic\asi_source_TNI_arctic_b0451.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\native_bdl_arctic_b0451.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\encodec-vc-arctic_TNI_arctic_b0451.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\tfcodec_ac_epoch6_best_TNI_arctic_b0451.wav" controls="" preload="" style="width: 100%;"></audio></td>
+        </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">But such divergence of opinion would constitute no menace to society.</td> 
+      <td style="text-align: left"><audio src="iclr_final\arctic\asi_source_TNI_arctic_b0465.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\native_bdl_arctic_b0465.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\encodec-vc-arctic_TNI_arctic_b0465.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\tfcodec_ac_epoch6_best_TNI_arctic_b0465.wav" controls="" preload="" style="width: 100%;"></audio></td>
+        </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Not a wheel moved in his empire.</td> 
+      <td style="text-align: left"><audio src="iclr_final\arctic\asi_source_SVBI_arctic_b0475.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\native_bdl_arctic_b0475.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\encodec-vc-arctic_SVBI_arctic_b0475.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\tfcodec_ac_epoch6_best_SVBI_arctic_b0475.wav" controls="" preload="" style="width: 100%;"></audio></td>
+        </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: left">The reorganization of these countries took the form of revolution.</td> 
+      <td style="text-align: left"><audio src="iclr_final\arctic\asi_source_SVBI_arctic_b0476.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\native_bdl_arctic_b0476.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\encodec-vc-arctic_SVBI_arctic_b0476.wav" controls="" preload="" style="width: 100%;"></audio></td>
+      <td style="text-align: left"><audio src="iclr_final\arctic\tfcodec_ac_epoch6_best_SVBI_arctic_b0476.wav" controls="" preload="" style="width: 100%;"></audio></td>
+        </tr>
+  </tbody>
+</table>
+
+
+
+    <!-- </section> -->
+
+    
+  </body>
+</html>
